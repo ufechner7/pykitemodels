@@ -4,13 +4,18 @@ but for Python. For now only working on Linux. If you need Windows support, plea
 
 ## Installation
 Check out this repository with git:
-```
+```bash
 git clone https://github.com/ufechner7/pykitemodels.git
 cd pykitemodels
 ```
 
 You can use the bash script `bin/install` to install `pixi` and Julia, to add the alias jl and py
 for starting Julia and Python and to configure `ipython`. Just execute point one to seven.
+```bash
+cd bin
+./install
+```
+Expected output:
 ```
 (pykitemodels) ufechner@ufryzen:~/repos/pykitemodels/bin$ ./install 
 1) Install pixi
