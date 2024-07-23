@@ -1,0 +1,92 @@
+#!/bin/bash
+
+if [[ $(basename $(pwd)) == "bin" ]]; then
+    cd ..
+fi
+
+PS3='Please enter your choice, 9 to quit: '
+options=("Install pixi" "Install ipython config file" "Install juliaup" "Install Julia 1.10" "Initial install of Julia packages" "Add alias for jl and py to ~/.bashrc" "Install modelserver.service" "Update Julia packages" "Quit")
+select opt in "${options[@]}"
+do
+    case $opt in
+        "Install pixi")
+            echo "Installing pixi (a package manager for Python)"
+            if ! command -v pixi &> /dev/null
+            then
+                echo "Installing pixi"
+                curl -fsSL https://pixi.sh/install.sh | bash
+                echo "Please restart the terminal!!!"
+            else
+                echo "pixi already installed"
+            fi
+            ;;
+        "Install ipython config file")
+            echo "Installing ipython_config.py !"
+            if [ ! -f ~/.ipython/profile_default/ipython_config.py ]; then
+                mkdir -p ~/.ipython/profile_default
+                cp utils/ipython_config.py ~/.ipython/profile_default/ipython_config.py
+                echo "ipython_config.py installed."
+            else
+                echo "~/.ipython/profile_default/ipython_config.py already exists"
+            fi
+            ;;
+        "Install juliaup")
+            echo "Installing juliaup (an installer and version manager for Julia)"
+            if ! command -v juliaup &> /dev/null
+            then
+                echo "Installing juliaup"
+                curl -fsSL https://install.julialang.org | sh
+                echo "Please restart the terminal!!!"
+            else
+                echo "juliaup already installed"
+            fi
+            ;;
+        "Install Julia 1.10")
+            echo "Installing Julia using juliaup"
+            juliaup add 1.10
+            juliaup default 1.10
+            ;;
+        "Initial install of Julia packages")
+            echo "Installing Julia packages"
+            julia --project -e 'using Pkg; Pkg.resolve();Pkg.instantiate();println("Packages installed")'
+            ;;
+        "Add alias for jl and py to ~/.bashrc")
+            echo "Adding alias for jl and py to ~/.bashrc"
+            OUTPUT=$(cat ~/.bashrc)
+            if echo "$OUTPUT" | grep -q "py="; then
+                echo "alias for py already exists"
+            else
+                echo "alias py='./bin/run_python'" >> ~/.bashrc
+                echo "alias for py created"
+            fi
+
+            if echo "$OUTPUT" | grep -q "jl="; then
+                echo "alias for jl already exists"
+            else
+                echo "alias jl='./bin/run_julia'" >> ~/.bashrc
+                echo "alias for jl created"
+            fi
+            source ~/.bashrc
+            ;;
+
+        "Install modelserver.service")
+            echo "Installing modelserver.service"
+            cp utils/modelserver.service.template utils/modelserver.service
+            sed -i "s/USER/$USER/g" utils/modelserver.service
+            sed -i "s|PATH|$(pwd)|g" utils/modelserver.service
+            sudo cp utils/modelserver.service /etc/systemd/system
+            sudo systemctl daemon-reload
+            sudo systemctl enable modelserver
+            sudo systemctl start modelserver
+            ;;
+
+        "Update Julia packages")
+            echo "Updating Julia packages"
+            julia --project -e 'using Pkg; Pkg.update()'
+            ;;
+        "Quit")
+            break
+            ;;
+        *) echo "invalid option $REPLY";;
+    esac
+done

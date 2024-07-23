@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [[ $(basename $(pwd)) == "bin" ]]; then
+    cd ..
+fi
+
+if [[ $PIXI_PROMPT == "" ]]; then
+    pixi run pytest tests/test_set_inputs.py
+else
+    pytest tests/test_set_inputs.py
+fi

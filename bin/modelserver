@@ -1,0 +1,34 @@
+#!/bin/bash
+
+if [[ $(basename $(pwd)) == "bin" ]]; then
+    cd ..
+fi
+
+case "$1" in
+    start)
+            echo -n "Starting modelserver"
+            sudo systemctl start modelserver.service
+            echo "."
+            ;;
+   stop) 
+            echo -n "Stopping modelserver"
+            sudo systemctl stop modelserver.service
+            echo "."
+            ;;
+   status) 
+            echo -n "Status of modelserver"
+            sudo systemctl status modelserver.service
+            echo "."
+            ;;
+   restart)
+            echo -n "Restarting modelserver"
+            sudo systemctl restart modelserver.service
+            echo "."
+            ;;
+        *)
+            echo "Usage: ./bin/modelserver start|stop|restart"
+            exit 1
+            ;;
+    esac
+
+

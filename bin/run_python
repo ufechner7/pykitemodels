@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [[ $(basename $(pwd)) == "bin" ]]; then
+    cd ..
+fi
+
+if [[ $PIXI_PROMPT == "" ]]; then
+    pixi run ipython
+else
+    ipython
+fi

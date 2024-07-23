@@ -1,0 +1,11 @@
+[Unit]
+Description=provide http functions for kite simulation
+
+[Service]
+Type=exec
+ExecStart=PATH/bin/run_modelserver
+User=USER
+RemainAfterExit=no
+
+[Install]
+WantedBy=multi-user.target
