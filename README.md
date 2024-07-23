@@ -218,3 +218,11 @@ you can import the following functions:
 - get_errors()
 - get_last_error()
 - clear_errors()
+
+## Licence
+This project is licensed under the MIT License. Please see the below WAIVER in association with the license.
+
+## WAIVER
+Technische Universiteit Delft hereby disclaims all copyright interest in the package “KiteController.jl” (controllers for airborne wind energy systems) written by the Author(s).
+
+Prof.dr. H.G.C. (Henri) Werij, Dean of Aerospace Engineering
