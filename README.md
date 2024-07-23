@@ -173,15 +173,6 @@ In [1]: %run src/model_client.py
 ```
 Expected output: The first and second state of a simulation as dictionaries.
 
-### Running the Python test script
-```bash
-bin/run_pytest
-```
-Expected output: Two plots, when you close them it should say:
-```
- 1 passed in x.xxs
-```
-
 ### Running the stress test script
 Start ipython with `py`, and then execute:
 ```python
