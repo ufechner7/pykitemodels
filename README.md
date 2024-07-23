@@ -16,7 +16,7 @@ for starting Julia and Python and to configure `ipython`. Just execute point one
 7) Install modelserver.service 
 8) Update Julia packages
 9) Quit
-Please enter your choice, 8 to quit: 8
+Please enter your choice, 9 to quit: 9
 ```
 <details>
   <summary>Detailed installation instruction with using the install script</summary>
