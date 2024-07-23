@@ -228,3 +228,6 @@ This project is licensed under the MIT License. Please see the below WAIVER in a
 Technische Universiteit Delft hereby disclaims all copyright interest in the package “pykitemodels” (models of airborne wind energy systems) written by the Author(s).
 
 Prof.dr. H.G.C. (Henri) Werij, Dean of Aerospace Engineering
+
+## Donations
+If you like this software, please consider donating to https://gofund.me/508e041b .
