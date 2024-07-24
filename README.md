@@ -2,6 +2,19 @@
 Package that provides the kite models as described in [KiteModels](https://ufechner7.github.io/KiteModels.jl/stable/),
 but for Python. For now only working on Linux. If you need Windows support, please create a GitHub issue.
 
+## Prerequistes
+Check that `systemctl` is installed on your system:
+```bash
+which systemctl
+```
+Expected output: 
+```bash
+/usr/bin/systemctl
+```
+or similar.
+
+If you are using a docker container, please install [docker systemctl replacement](https://github.com/gdraheim/docker-systemctl-replacement) before you continue.
+
 ## Installation
 Check out this repository with git:
 ```bash
