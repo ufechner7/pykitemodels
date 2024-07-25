@@ -2,7 +2,9 @@
 A package that provides the kite power system models as described in [KiteModels.jl](https://ufechner7.github.io/KiteModels.jl/stable/), [WinchModels.jl](https://github.com/aenarete/WinchModels.jl), [KitePodModels.jl](https://github.com/aenarete/KitePodModels.jl) and [AtmosphericModels.jl](https://github.com/aenarete/AtmosphericModels.jl) 
 with a Python interface. For now, only working on Linux. If you need Windows support, please create a GitHub issue.
 
-## Prerequistes
+Could also be extended with an interface for Matlab/ Simulink. If you need that, please create a GitHub issue.
+
+## Prerequiste
 Check that `systemctl` is installed on your system:
 ```bash
 which systemctl
