@@ -31,7 +31,7 @@ kps4::Union{KPS4, Nothing} = nothing
 ex = nothing
 
 mutable struct StepParams
-    v_ro::Union{Float64, Nothing}
+    set_speed::Union{Float64, Nothing}
     set_torque::Union{Float64, Nothing}
     v_wind_gnd::Float64
     wind_dir::Float64
@@ -87,13 +87,13 @@ function start_server(log=true)
             return "\"Error: system not initialized\""
         end
         p = json(req, StepParams)
-        if isnothing(p.v_ro)
-            p.v_ro = 0
+        if isnothing(p.set_speed)
+            p.set_speed = 0
         end
         res = "OK"
         try
             set_depower_steering(kcu, p.depower, p.steering)
-            KiteModels.next_step!(kps4, integrator; p.v_ro, p.v_wind_gnd, p.wind_dir, dt=dt)
+            KiteModels.next_step!(kps4, integrator; p.set_speed, p.v_wind_gnd, p.wind_dir, dt=dt)
         catch e
             println(e)
             res = repr(e)
@@ -128,11 +128,11 @@ function test(init_=true)
         init()
     end
     p = StepParams(nothing, nothing, 6, 0, 0.25, 0)
-    if isnothing(p.v_ro)
-        p.v_ro = 0
+    if isnothing(p.set_speed)
+        p.set_speed = 0
     end
     set_depower_steering(kcu, p.depower, p.steering)
-    time = KiteModels.next_step!(kps4, integrator; p.v_ro, p.v_wind_gnd, p.wind_dir, dt=dt)
+    time = KiteModels.next_step!(kps4, integrator; p.set_speed, p.v_wind_gnd, p.wind_dir, dt=dt)
     @assert time >= 0.05
     state = SysState(kps4)
     state.time = time
@@ -143,14 +143,14 @@ function test2()
     local time, state, res
     init()
     p = StepParams(nothing, nothing, 6, 0, 0.25, 0)
-    if isnothing(p.v_ro)
-        p.v_ro = 0
+    if isnothing(p.set_speed)
+        p.set_speed = 0
     end
     res = "OK"
     for i in 1:30/dt
         try
             set_depower_steering(kcu, p.depower, p.steering)
-            time = KiteModels.next_step!(kps4, integrator; p.v_ro, p.v_wind_gnd, p.wind_dir, dt=dt)
+            time = KiteModels.next_step!(kps4, integrator; p.set_speed, p.v_wind_gnd, p.wind_dir, dt=dt)
         catch e
             println(e)
             res = repr(e)

@@ -73,7 +73,7 @@ def init():
     errors += 1
     return None
 
-def step(v_ro = None, set_torque=None, v_wind_gnd=6.0, wind_dir=0.0, depower=0.25, steering=0.0):
+def step(set_speed = None, set_torque=None, v_wind_gnd=6.0, wind_dir=0.0, depower=0.25, steering=0.0):
     global errors, last_error
     json_data = json.dumps(locals())
     connection.request('POST', '/step', json_data)
