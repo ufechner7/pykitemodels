@@ -1,3 +1,8 @@
+name = "PyKiteModels"
+uuid = "b94af626-7956-4878-9336-2adc27959007"
+authors = ["Uwe Fechner <fechner@aenarete.eu> and contributors"]
+version = "0.6.1"
+
 [deps]
 HTTP = "cd3eb016-35fb-5094-929b-558a96fad6f3"
 JSON3 = "0f8b85d8-7281-11e9-16c2-39a750bddbf1"
@@ -5,6 +10,7 @@ KiteModels = "b94af626-7959-4878-9336-2adc27959007"
 KitePodModels = "9de5dc81-f971-414a-927b-652b2f41c539"
 Oxygen = "df9a0d86-3283-4920-82dc-4555fc0d1d8b"
 StructTypes = "856f2bd8-1eba-4b0a-8007-ebc267875bd4"
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [compat]
 KiteModels = "0.6.1"
