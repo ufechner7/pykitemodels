@@ -7,6 +7,6 @@ Oxygen = "df9a0d86-3283-4920-82dc-4555fc0d1d8b"
 StructTypes = "856f2bd8-1eba-4b0a-8007-ebc267875bd4"
 
 [compat]
-KiteModels = "0.6.2"
+KiteModels = "0.6.1"
 KitePodModels = "0.3.3"
 julia = "~1.10"

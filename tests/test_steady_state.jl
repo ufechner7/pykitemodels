@@ -1,7 +1,8 @@
 using KiteModels, KitePodModels
 
+set = se()
 if ! @isdefined kcu
-    const kcu = KCU()
+    const kcu = KCU(set)
 end
 if ! @isdefined kps
     const kps = KPS4(kcu)
