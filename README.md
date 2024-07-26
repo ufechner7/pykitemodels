@@ -6,7 +6,7 @@ with a Python interface. For now, only working on Linux. If you need Windows sup
 
 Could also be extended with an interface for Matlab/ Simulink. If you need that, please create a GitHub issue.
 
-## Prerequiste
+## Prerequisite
 Check that `systemctl` is installed on your system:
 ```bash
 which systemctl
