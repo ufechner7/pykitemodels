@@ -25,10 +25,10 @@ import json
 import time
 
 connection = http.client.HTTPConnection('127.0.0.1:8080')
-errors = 0
-last_error = ""
+ERRORS = 0
+LAST_ERROR = ""
 
-setdict = {
+SETTINGS = {
   "sample_freq": 20, # sampling frequency [Hz]
   "log_level": 2,
   "solver": "DFBDF",
@@ -37,32 +37,32 @@ setdict = {
 }
 
 def get_last_error():
-    return last_error
+    return LAST_ERROR
 
 def set_data_path(path):
-    global errors
+    global ERRORS
     json_data = json.dumps(path)
     connection.request('POST', '/set_data_path', json_data)
     response = connection.getresponse()
     if response.status == 200:
         obj = json.loads(response.read())
         return obj
-    errors += 1
-    return None    
+    ERRORS += 1
+    return None
 
-def set_set(setdict):
-    global errors
-    json_data = json.dumps(setdict)
+def set_set(set_dict):
+    global ERRORS
+    json_data = json.dumps(set_dict)
     connection.request('POST', '/set_set', json_data)
     response = connection.getresponse()
     if response.status == 200:
         obj = json.loads(response.read())
         return obj
-    errors += 1
+    ERRORS += 1
     return None
 
 def init():
-    global errors
+    global ERRORS
     connection.request('GET', '/init')
     time.sleep(0.5)
     response = connection.getresponse()
@@ -70,60 +70,62 @@ def init():
         obj = json.loads(response.read())
         return obj
     response.read()
-    errors += 1
+    ERRORS += 1
     return None
 
-def step(set_speed = None, set_torque=None, v_wind_gnd=6.0, wind_dir=0.0, depower=0.25, steering=0.0):
-    global errors, last_error
+# pylint: disable=unused-argument
+def step(set_speed = None, set_torque=None, v_wind_gnd=6.0, \
+         wind_dir=0.0, depower=0.25, steering=0.0):
+    global ERRORS, LAST_ERROR
     json_data = json.dumps(locals())
     connection.request('POST', '/step', json_data)
     response = connection.getresponse()
     if response.status == 200:
         obj = json.loads(response.read())
         if obj is None:
-            errors += 1
+            ERRORS += 1
         if obj != "OK":
-            errors += 1
-            last_error = obj
+            ERRORS += 1
+            LAST_ERROR = obj
             return None
         return obj
     response.read()
-    errors += 1
+    ERRORS += 1
     return None
 
 def sys_state():
-    global errors
+    global ERRORS
     connection.request('GET', '/sys_state')
     response = connection.getresponse()
     if response.status == 200:
         obj = json.loads(response.read())
         return obj
     response.read()
-    errors += 1
+    ERRORS += 1
     return None
 
 def settings():
-    global errors
+    global ERRORS
     connection.request('GET', '/settings')
     response = connection.getresponse()
     if response.status == 200:
         obj = json.loads(response.read())
         return obj
     response.read()
-    errors += 1
+    ERRORS += 1
     return None
 
 def get_errors():
-    return errors
+    return ERRORS
 
 def clear_errors():
-    global errors, last_error
-    errors = 0
-    last_error = ""
+    global ERRORS, LAST_ERROR
+    ERRORS = 0
+    LAST_ERROR = ""
 
 if __name__ == '__main__':
     set_data_path("data")
-    set_set(setdict)
+    set_set(SETTINGS)
     init()
     state = sys_state()
     print(state)
