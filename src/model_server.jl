@@ -117,9 +117,9 @@ function start_server(log=true)
 
     # start the web server
     if log
-        serve()
+        serveparallel()
     else
-        serve(access_log=nothing)
+        serveparallel(access_log=nothing)
     end
 end
 
