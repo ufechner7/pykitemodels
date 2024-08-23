@@ -29,6 +29,7 @@ kcu::Union{KCU, Nothing}  = nothing
 kps4::Union{KPS4, Nothing} = nothing
 
 ex = nothing
+integrator = nothing
 
 mutable struct StepParams
     set_speed::Union{Float64, Nothing}
@@ -57,8 +58,12 @@ function init()
     global kcu, kps4, integrator
     kcu = KCU(set)
     kps4 = KPS4(kcu)
-    integrator = KiteModels.init_sim!(kps4, stiffness_factor=0.5, prn=false)
-    nothing
+    integrator = KiteModels.init_sim!(kps4; delta=0.03, stiffness_factor=0.05, prn=false)
+    if isnothing(integrator)
+        return "Error: finding the initial state failed"
+    else
+        return "OK"
+    end
 end
 
 function start_server(log=true)
@@ -77,13 +82,13 @@ function start_server(log=true)
     end
 
     @get "/init" function(req::HTTP.Request)
-        init()
-        return json("OK")
+        msg = init()
+        return json(msg)
     end
 
     @post "/step" function(req::HTTP.Request)
         local res
-        if isnothing(kcu) || isnothing(kps4)
+        if isnothing(kcu) || isnothing(kps4) || isnothing(integrator)
             return "\"Error: system not initialized\""
         end
         p = json(req, StepParams)
